@@ -62,7 +62,8 @@ impl Calculator {
 
     fn oxygen_generator_rating(&self) -> i64 {
         let mut filtered = self.instructions.clone();
-        for i in 0..self.store.keys().len() {
+        let len = filtered.last().unwrap().binary.len();
+        for i in 0..len {
             let (ones, zeroes) = ones_and_zeroes_for_set(filtered.clone(), i);
 
             if filtered.len() == 1 {
@@ -74,6 +75,7 @@ impl Calculator {
                     .into_iter()
                     .filter(|x| x.binary.as_str().chars().last().unwrap() == '1')
                     .collect();
+                continue;
             }
 
             if ones > zeroes {
@@ -81,7 +83,7 @@ impl Calculator {
                     .into_iter()
                     .filter(|x| x.binary.as_str().chars().nth(i).unwrap() == '1')
                     .collect();
-            } else if zeroes > ones {
+            } else {
                 filtered = filtered
                     .into_iter()
                     .filter(|x| x.binary.as_str().chars().nth(i).unwrap() == '0')
@@ -94,7 +96,8 @@ impl Calculator {
 
     fn co2_scrubber(&self) -> i64 {
         let mut filtered = self.instructions.clone();
-        for i in 0..self.store.keys().len() {
+        let len = filtered.last().unwrap().binary.len();
+        for i in 0..len {
             let (ones, zeroes) = ones_and_zeroes_for_set(filtered.clone(), i);
 
             if filtered.len() == 1 {
@@ -106,6 +109,7 @@ impl Calculator {
                     .into_iter()
                     .filter(|x| x.binary.as_str().chars().last().unwrap() == '0')
                     .collect();
+                continue;
             }
 
             if ones < zeroes {
@@ -113,7 +117,7 @@ impl Calculator {
                     .into_iter()
                     .filter(|x| x.binary.as_str().chars().nth(i).unwrap() == '1')
                     .collect();
-            } else if zeroes < ones {
+            } else {
                 filtered = filtered
                     .into_iter()
                     .filter(|x| x.binary.as_str().chars().nth(i).unwrap() == '0')
